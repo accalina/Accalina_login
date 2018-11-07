@@ -98,18 +98,20 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">face</i>
+                      <i class="material-icons" @click="lockText.username = !lockText.username">face</i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" placeholder="First Name..." v-model="name">
+                  <input @blur="lockText.username = !lockText.username" v-if="!lockText.username" type="text" class="form-control" placeholder="First Name..." v-model="name">
+                  <h4 @click="lockText.username = !lockText.username" v-if="lockText.username">{{ name }}</h4>
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">mail</i>
+                      <i class="material-icons" @click="lockText.email = !lockText.email">mail</i>
                     </span>
                   </div>
-                  <input type="email" class="form-control" placeholder="Email..." v-model="email">
+                  <input @blur="lockText.email = !lockText.email" v-if="!lockText.email" type="email" class="form-control" placeholder="Email..." v-model="email">
+                  <h4 @click="lockText.email = !lockText.email" v-if="lockText.email">{{ email }}</h4>
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -117,17 +119,19 @@
                       <i class="material-icons">lock_outline</i>
                     </span>
                   </div>
-                  <input type="password" class="form-control" placeholder="Password...">
+                  <input type="password" class="form-control" v-model="password" placeholder="Password...">
                 </div>
               </div>
               <div class="footer text-center">
-                <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Get Started</a>
+                <a v-if="password != '' " href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Get Started</a>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+    
     <footer class="footer">
       <div class="container">
         <nav class="float-left">
@@ -164,6 +168,7 @@
       </div>
     </footer>
   </div>
+
   <script>
     let source = {
       name: "",
@@ -171,6 +176,11 @@
       registration: "register-page.html",
       login: "login-page.html",
       email: "",
+      password: "",
+      lockText: {
+        username: false,
+        email   : false,
+        }
     }
 
     header = new Vue({
